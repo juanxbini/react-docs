@@ -88,3 +88,106 @@ return (
     {isLoggedIn && <AdminPanel />}
  </div> 
 ```
+## Renderizado de listas
+
+Dependerás de funcionalidades de JS como bucles y la funcion map() de los arreglos.
+
+```
+const products = [
+    { title: 'Col', id: 1 },
+    { title: 'Ajo', id: 2 },
+    { title: 'Manzana', id: 3 }
+];
+
+const listItems = products.map( product => 
+    <li key = {product.id}>
+        {product.title}
+    </li>
+);
+
+return (
+    <ul>{listItems}</ul>
+)
+```
+## Responder a eventos
+
+Puedes hacerlo declarando la funcion controladora de eventos dentro de tus componentes.
+
+```
+function MyButton(){
+    function handleClick() {
+        alert('Me hiciste click');
+    }
+
+    return (
+        <button onClick={handleClick}>
+            Hazme Click
+        </button>
+    );
+}
+```
+> Nota que onClick={handleClick} no tiene paréntesis al final. No llames a la función contoladora del evento, solo necesitas pasarla hacia abajo.
+
+## Actualizar pantalla
+
+Para que tu componente "recuerde" alguna información y la muestre, le deberas añadir estado.
+
+Primero, importa "useState" de React:
+
+```
+import { useState } from 'react';
+```
+Ahora puedes declarar una variable de estado dentro de tu componente.
+
+```
+function MyButton() {
+    const [count, setCount] = useState(0);
+
+    //...
+}
+```
+Obtendrás el estado actual (count), y la función que te permite actualizarlo (setCount). El valor por defecto será 0, o el que pases como argumento a useState.
+
+```
+function MyButton() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Hiciste clic {count} veces
+    </button>
+  );
+}
+```
+> Si renderizas el mismo componente varias veces, cada uno obtendrá su propio estado.
+
+## El uso de los Hooks
+
+Las gunciones que comiencen con "use" se llaman Hooks. Puedes encontrar Hooks nativos  y tambien puedes escribir tus propios Hooks.
+
+## Compartir datos entre componentes
+
+Para hacer que ambos componentes MyButton muestren el mismo count y se actualicen juntos, necesitas mover el estado de los botones individuales "hacia arriba" al componente más cercano que contiene a todos.
+
+```
+export default function MyApp() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>Contadores que se actualizan separadamente</h1>
+      <MyButton count={count} onClick={handleClick} />
+      <MyButton count={count} onClick={handleClick} />
+    </div>
+  );
+}
+```
+> La información que pasas hacia abajo se llaman props. 
