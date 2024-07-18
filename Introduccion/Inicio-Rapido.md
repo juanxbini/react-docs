@@ -1,4 +1,4 @@
-# react-docs
+# INICIO RÁPIDO
 Apuntes de la documentacion oficial de React
 
 ## Creación y anidado de componentes
